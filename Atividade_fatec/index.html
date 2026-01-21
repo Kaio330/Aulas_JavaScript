@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+ <html lang="pt-BR">
+ <head>
+  <meta charset="UTF-8">
+  <title>Minha Lista de Tarefas</title>
+  <style>
+ body {
+ font-family: Arial, sans-serif;
+ padding: 20px;
+ background-color: #f8f8f8;
+ }
+ h1 {
+ text-align: center;
+ }
+ input[type="text"] {
+ padding: 5px;
+ font-size: 16px;
+ }
+ button {
+ padding: 6px 12px;
+ font-size: 16px;
+ }
+ ul {
+ list-style-type: disc;
+ margin-top: 20px;
+ }
+ li {
+ cursor: pointer;
+ font-size: 18px;
+ }
+ .feito {
+ color: grey;
+ text-decoration: line-through;
+ }
+  </style>
+ </head>
+ <body>
+  <h1>Minha Lista de Tarefas</h1>
+  <input type="text" id="novaTarefa" placeholder="Digite uma tarefa">
+  <button onclick="adicionarTarefa()">Adicionar</button>
+  <ul id="listaTarefas">
+ <!-- tarefas aparecerão aqui -->
+  </ul>
+  <script>
+ function adicionarTarefa() {
+ const input = document.getElementById("novaTarefa");
+ const texto = input.value.trim();
+ if (texto !== "") {
+ const li = document.createElement("li");
+ li.textContent = texto;
+ li.onclick = function() {
+ li.classList.toggle("feito");
+ };
+ document.getElementById("listaTarefas").appendChild(li);
+ input.value = "";
+ }
+ }
+  </script>
+ </body>
+ </html

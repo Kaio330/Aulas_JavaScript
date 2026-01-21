@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerar Loop com PHP via JS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    form {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      background-color: #fff;
+      padding: 15px;
+      width: 320px;
+      min-height: 80px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow-y: auto;
+      font-size: 16px;
+    }
+
+    .erro {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gerador de Loop com PHP (via JavaScript)</h1>
+
+  <form id="formLoop">
+    <label for="login">Login:</label>
+    <input type="number" id="login" name="login" required min="0" placeholder="Ex: 1">
+
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" name="senha" required min="0" placeholder="Ex: 10">
+
+    <button type="submit">Logar</button>
+  </form>
+
+  <div id="resultado">O resultado aparecerá aqui...</div>
+
+  <script>
+    const form = document.getElementById('formLoop');
+    const resultadoDiv = document.getElementById('resultado');
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); // impede o envio tradicional do formulário
+      const login_digitado = document.getElementById('login').value;
+      const senha_digitada = document.getElementById('senha').value;
+      // Limpa e mostra estado de carregamento
+      resultadoDiv.innerHTML = 'Carregando...';
+        // Envia a requisição GET para o PHP
+        const response = await fetch(`verificador.php?login=${login_digitado}&senha=${senha_digitada}`);
+        if (!response.ok) {
+          alert(`Erro HTTP: ${response.status}`);
+        }
+        // Lê a resposta como texto (HTML do PHP)
+        const data = await response.text();
+        resultadoDiv.innerHTML = data;
+    });
+  </script>
+
+</body>
+</html>
