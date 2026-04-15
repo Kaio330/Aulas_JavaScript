@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação PI - FinQuest (Dark Mode)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* 1. SETUP GERAL E RESET (Padrão 1) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #050810; /* Fundo extra escuro para contraste */
+            display: grid;
+            gap: 30px;
+            grid-template-columns: 1fr;
+            min-height: 100vh;
+            padding: 40px 0;
+            place-items: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* 1.1 CONTAINER PRINCIPAL DO SLIDE */
+        .slide-container {
+            background-color: #0f172a; /* Slate 900 */
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            height: 720px;
+            width: 1280px;
+            overflow: hidden;
+            padding: 60px;
+            position: relative;
+        }
+
+        /* 1.2 BACKGROUND ESTÉTICO (Luzes de fundo roxas/verdes) */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(15, 23, 42, 0) 70%); /* Roxo difuso */
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .slide-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #10b981, #8b5cf6); /* Linha degradê Verde/Roxo */
+            z-index: 2;
+        }
+
+        .slide-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 2. TIPOGRAFIA CONSISTENTE */
+        h1, h2, h3, h4 {
+            color: #f8fafc; /* Slate 50 */
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+
+        p, li {
+            color: #cbd5e1; /* Slate 300 */
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        .slide-title {
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Cores de Destaque */
+        .text-green { color: #10b981; }
+        .text-purple { color: #8b5cf6; }
+
+        /* 3. LAYOUTS ESPECÍFICOS */
+
+        /* Layout: Title Slide */
+        .title-layout {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+        }
+
+        .title-layout .badge {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            border-radius: 50px;
+            color: #10b981;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            padding: 8px 24px;
+            text-transform: uppercase;
+        }
+
+        .title-layout h1 {
+            font-size: 110px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title-layout .subtitle {
+            color: #94a3b8;
+            font-size: 28px;
+            font-weight: 400;
+            max-width: 800px;
+            margin-bottom: 40px;
+        }
+
+        .team-info {
+            color: #64748b;
+            font-size: 18px;
+            line-height: 1.8;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+        }
+
+        .team-info strong {
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        /* Layout: Duas Colunas Padrão */
+        .two-column {
+            align-items: center;
+            display: grid;
+            gap: 60px;
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+        }
+
+        /* Lista Personalizada */
+        .styled-list {
+            list-style: none;
+        }
+
+        .styled-list li {
+            font-size: 20px;
+            margin-bottom: 25px;
+            padding-left: 35px;
+            position: relative;
+        }
+
+        .styled-list li::before {
+            content: '\f111'; /* Círculo FontAwesome */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #10b981; /* Verde */
+            position: absolute;
+            left: 0;
+            top: 6px;
+            font-size: 14px;
+        }
+
+        .styled-list strong {
+            color: #f8fafc;
+            font-weight: 600;
+        }
+
+        /* Wrappers de Imagens */
+        .image-wrapper {
+            border-radius: 16px;
+            height: 450px;
+            overflow: hidden;
+            width: 100%;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-wrapper img {
+            height: 100%;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        /* Layout: Rounded Image (Imagem Redonda) */
+        .rounded-image-layout .image-wrapper {
+            border-radius: 50%;
+            border: 4px solid #10b981;
+            box-shadow: 0 0 50px rgba(16, 185, 129, 0.15);
+            flex-shrink: 0;
+            height: 420px;
+            margin: 0 auto;
+            width: 420px;
+        }
+
+        .rounded-image-layout-text h3 {
+            color: #10b981;
+            font-size: 32px;
+            margin-bottom: 25px;
+        }
+
+        .rounded-image-layout-text p {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Layout: Tiled Text With Icons */
+        .tiled-content {
+            align-items: stretch;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .tile {
+            background-color: #1e293b; /* Slate 800 */
+            border-radius: 16px;
+            border: 1px solid #334155; /* Slate 700 */
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 40px 30px;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .tile .icon {
+            color: #10b981;
+            font-size: 45px;
+            margin-bottom: 25px;
+        }
+
+        .tile h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .tile p {
+            font-size: 16px;
+            color: #cbd5e1;
+        }
+
+        /* Tile Destaque */
+        .tile.highlight {
+            border: 1px solid #8b5cf6;
+            background-color: rgba(139, 92, 246, 0.05);
+        }
+
+        .tile.highlight .icon, .tile.highlight h3 {
+            color: #8b5cf6;
+        }
+
+        /* Layout: Tiled Images */
+        .image-tile {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            text-align: center;
+        }
+
+        .image-tile .image-wrapper {
+            height: 220px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+        }
+
+        .image-tile h3 {
+            color: #10b981;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .image-tile p {
+            font-size: 16px;
+            padding: 0 10px;
+        }
+
+        /* Estilo da Tabela de Metodologia para o Dark Mode */
+        .methodology-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid #334155;
+        }
+        .methodology-table th, .methodology-table td {
+            padding: 20px 30px;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+            font-size: 18px;
+            color: #cbd5e1;
+        }
+        .methodology-table th {
+            background: rgba(139, 92, 246, 0.1); /* Fundo roxo suave */
+            color: #8b5cf6; /* Texto roxo neon */
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 16px;
+            letter-spacing: 1px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .methodology-table td strong { color: #f8fafc; }
+        .methodology-table tr:last-child td { border-bottom: none; }
+
+        /* Layout: Q&A / Encerramento */
+        .qa-layout {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .qa-layout h2 {
+            font-size: 90px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #10b981, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .qa-layout p {
+            font-size: 28px;
+            color: #94a3b8;
+        }
+
+        .qa-layout .contact-info {
+            align-items: center;
+            color: #8b5cf6;
+            display: flex;
+            font-size: 24px;
+            gap: 15px;
+            margin-top: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
+
+        .qa-layout .contact-info i {
+            font-size: 34px;
+        }
+
+        /* --- ESTILOS PARA EXPORTAÇÃO (PDF) --- */
+        @media print {
+            @page { size: 1280px 720px; margin: 0; }
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #0f172a !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                gap: 0;
+                display: block;
+            }
+            .slide-container {
+                width: 1280px;
+                height: 720px;
+                page-break-after: always;
+                page-break-inside: avoid;
+                margin: 0;
+                box-shadow: none;
+                border-radius: 0;
+                border: none;
+            }
+            .floating-btn {
+                display: none !important;
+            }
+        }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: linear-gradient(90deg, #10b981, #059669);
+            color: #ffffff;
+            border: none;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .floating-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(16, 185, 129, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Botão de Download PDF -->
+<button class="floating-btn" onclick="window.print()">
+    <i class="fa-solid fa-file-pdf"></i> Baixar como PDF
+</button>
+
+<!-- Slide 1: Capa (Title Slide) -->
+<div class="slide-container" id="slide1">
+    <div class="title-layout">
+        <div class="badge">FATEC Cotia • DSM</div>
+        <h1>FinQuest</h1>
+        <p class="subtitle">Educação Financeira Gamificada</p>
+        
+        <div class="team-info">
+            <strong>Equipe:</strong> Samuel de Souza Ribeiro, Kaio Melugo, Felipe Vieira, Felipe Grubsh<br>
+            Projeto Integrador • [Cidade da Apresentação] • 2026
+        </div>
+    </div>
+</div>
+
+<!-- Slide 2: O Cenário (A Dor) -->
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">1. Motivação e Cenário Atual</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3 style="font-size: 64px; color: #10b981; margin-bottom: 10px;">~ 70%</h3>
+                <p style="font-size: 24px; color: #f8fafc; font-weight: 500; margin-bottom: 30px;">dos brasileiros encontram-se endividados.</p>
+                <ul class="styled-list">
+                    <li><strong>Defasagem:</strong> Falta de educação financeira básica resulta em jovens e adultos incapazes de gerir finanças.</li>
+                    <li><strong>Impacto Nacional:</strong> Este cenário compromete a estabilidade individual e é um obstáculo para o desenvolvimento econômico do país.</li>
+                    <li><strong>Nossa Missão:</strong> Suprir essa carência educacional de maneira prática, acessível e engajadora.</li>
+                </ul>
+            </div>
+            <div>
+                <!-- Imagem ilustrativa de dívidas/contas -->
+                <div class="image-wrapper">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/13627416565862360312" alt="Pessoa preocupada com contas e gráficos financeiros em queda">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: A Solução (O Clímax) -->
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">2. A Solução: App FinQuest</h2>
+    <div class="content-area">
+        <div class="two-column rounded-image-layout" style="grid-template-columns: 40% 60%;">
+             <div>
+                <!-- Imagem do aplicativo gamificado -->
+                <div class="image-wrapper">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/8734187287245345001" alt="Interface neon de aplicativo de gamificação e finanças">
+                </div>
+            </div>
+            <div class="rounded-image-layout-text">
+                <h3>Transformando aprendizado em jogo</h3>
+                <p>O desenvolvimento da nossa aplicação móvel e web utiliza a <strong>gamificação</strong> como chave para o engajamento contínuo do usuário.</p>
+                <ul class="styled-list" style="margin-top: 20px;">
+                    <li><strong>Mecânicas de Jogo:</strong> Progressão por níveis, missões práticas, loja virtual e conquistas (badges).</li>
+                    <li><strong>Do Básico ao Avançado:</strong> Ensina desde como criar um orçamento até investir em CDBs e Tesouro Direto.</li>
+                    <li><strong>Simulações Reais:</strong> Ambientes sem risco para planejar a compra de um carro ou a aposentadoria.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Objetivos Específicos -->
+<div class="slide-container" id="slide4">
+    <h2 class="slide-title">3. Objetivos Específicos</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-book-open-reader"></i></div>
+                <h3>Elevar Conhecimento</h3>
+                <p>Elevar o nível médio de conhecimento financeiro da população, ensinando conceitos fundamentais de gestão.</p>
+            </div>
+            <div class="tile highlight">
+                <div class="icon"><i class="fa-solid fa-arrow-trend-down"></i></div>
+                <h3>Diminuir Endividamento</h3>
+                <p>Impactar diretamente a taxa de endividamento brasileira auxiliando na construção de reservas de emergência.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+                <h3>Ensinar a Investir</h3>
+                <p>Desmistificar o universo dos investimentos e ensinar o usuário a investir o próprio dinheiro corretamente (Risco x Retorno).</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: Desenvolvimento e Arquitetura -->
+<div class="slide-container" id="slide5">
+    <h2 class="slide-title">4. Arquitetura e Desenvolvimento</h2>
+    <div class="content-area">
+        <p style="font-size: 22px; margin-bottom: 40px;">Padrões de projeto: <strong>Controller Service Repository (CSR)</strong> e estratégia <strong>Mobile First</strong>.</p>
+        <div class="tiled-content">
+            <div class="tile">
+                <div class="icon"><i class="fa-brands fa-angular"></i></div>
+                <h3>Front-end</h3>
+                <p>Linguagem: <strong>JavaScript</strong><br>Framework: <strong>Angular</strong><br>Implementação de telas e validações integradas à API REST.</p>
+            </div>
+            <div class="tile highlight">
+                <div class="icon"><i class="fa-brands fa-java"></i></div>
+                <h3>Back-end</h3>
+                <p>Linguagem: <strong>Java</strong><br>Framework: <strong>Spring Boot</strong><br>Responsável por gerenciar as regras de negócio e sistema de pontuação.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-database"></i></div>
+                <h3>Banco de Dados</h3>
+                <p>Tecnologia: <strong>PostgreSQL</strong><br>Modelo: Relacional<br>Garante a persistência segura do progresso dos usuários.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: Resultados Esperados (MVP) -->
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">5. Resultados Esperados (Best Case)</h2>
+    <div class="content-area">
+        <p style="font-size: 22px; margin-bottom: 40px; color: #f8fafc;">Entregáveis previstos para a conclusão da disciplina:</p>
+        <div class="tiled-content">
+            <div class="image-tile">
+                <div class="image-wrapper">
+                    <!-- Placeholder Imagem Integração -->
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/3280275062047494729" alt="Gráficos de fluxo de dados de API neon">
+                </div>
+                <h3>1. Integração Back/Front</h3>
+                <p>Comunicação completa e funcional entre a interface de usuário e os endpoints da API.</p>
+            </div>
+            <div class="image-tile">
+                <div class="image-wrapper">
+                    <!-- Placeholder Imagem Minigame -->
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/7903528862102912425" alt="Interface de quiz e jogo interativo no celular">
+                </div>
+                <h3>2. Módulo Jogável</h3>
+                <p>Entrega de 1 Mini Game (Quiz interativo) contemplando pelo menos 3 aulas finalizadas.</p>
+            </div>
+            <div class="image-tile">
+                <div class="image-wrapper">
+                    <!-- Placeholder Imagem Dashboard -->
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/15289152359562743470" alt="Painel futurista com gráficos de evolução de experiência">
+                </div>
+                <h3>3. Dashboard do Usuário</h3>
+                <p>Painel de controle exibindo o nível de aprendizado e progressão da jornada do jogador.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: Metodologia -->
+<div class="slide-container" id="slide7">
+    <h2 class="slide-title">6. Metodologia e Cronograma</h2>
+    <div class="content-area">
+        <table class="methodology-table">
+            <thead>
+                <tr>
+                    <th>Fase do Projeto</th>
+                    <th>Descrição da Atividade</th>
+                    <th>Responsável</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Iniciação</strong></td>
+                    <td>Definição do Termo de Abertura e mobilização da equipe.</td>
+                    <td>Equipe do Projeto</td>
+                </tr>
+                <tr>
+                    <td><strong>Planejamento</strong></td>
+                    <td>Detalhamento do escopo, diagramas e banco de dados.</td>
+                    <td>Equipe do Projeto</td>
+                </tr>
+                <tr>
+                    <td><strong>Execução</strong></td>
+                    <td>Desenvolvimento da API, Front-end e Banco de Dados.</td>
+                    <td>Desenvolvedores</td>
+                </tr>
+                <tr>
+                    <td><strong>Controle</strong></td>
+                    <td>Acompanhamento do progresso, Testes e correções de falhas.</td>
+                    <td>Gerente de Projeto</td>
+                </tr>
+                <tr>
+                    <td><strong>Encerramento</strong></td>
+                    <td>Deploy, entrega final e formalização do aceite.</td>
+                    <td>Toda a Equipe</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 8: Encerramento -->
+<div class="slide-container" id="slide8">
+    <div class="qa-layout">
+        <h2>Muito Obrigado!</h2>
+        <p>"A educação financeira é um direito e a chave para a autonomia do indivíduo."</p>
+        <div class="contact-info">
+            <i class="fa-brands fa-github"></i> github.com/projetos/finquest
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+```
